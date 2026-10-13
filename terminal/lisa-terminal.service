@@ -1,0 +1,31 @@
+[Unit]
+Description=丽萨语音终端 (Lisa Voice Terminal)
+After=network-online.target sound.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=lisa
+Group=lisa
+WorkingDirectory=/opt/lisa-terminal
+ExecStart=/opt/lisa-terminal/venv/bin/python main.py --config /opt/lisa-terminal/config.yaml
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# 音频设备访问权限
+SupplementaryGroups=audio gpio spi i2c
+
+# 安全加固
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/log/lisa-terminal.log /opt/lisa-terminal
+
+# 环境变量
+Environment=PULSE_SERVER=unix:/run/user/1000/pulse/native
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

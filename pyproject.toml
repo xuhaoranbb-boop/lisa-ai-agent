@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jarvis-agent"
+version = "1.0.0"
+description = "A local-first voice assistant with persistent memory and tool use."
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "aiohttp>=3.11,<4",
+    "ddgs>=9.16,<10",
+    "edge-tts>=7.2,<8",
+    "httpx>=0.28,<1",
+    "numpy>=2,<3",
+    "openai>=2,<3",
+    "pydantic>=2.12,<3",
+    "pydantic-settings>=2.10,<3",
+    "python-dotenv>=1.0,<2",
+    "rich>=13,<16",
+    "typer>=0.20,<1",
+    "tzdata>=2025.2",
+]
+
+[project.optional-dependencies]
+voice = [
+    "pipecat-ai[local,whisper,piper,silero,mcp]>=1.8.1,<2",
+    "faster-whisper>=1.2,<2",
+    "sherpa-onnx>=1.13,<2",
+]
+browser = [
+    "playwright>=1.50,<2",
+]
+dev = [
+    "aiohttp>=3.11,<4",
+    "faster-whisper>=1.2,<2",
+    "numpy>=2,<3",
+    "pipecat-ai[local,whisper,piper,silero,mcp]>=1.8.1,<2",
+    "pytest>=9,<10",
+    "pytest-asyncio>=1.3,<2",
+    "ruff>=0.12,<1",
+    "sherpa-onnx>=1.13,<2",
+]
+
+[project.scripts]
+jarvis = "jarvis.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jarvis"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["ashley-upstream/**"]
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "UP"]

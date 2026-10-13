@@ -1,0 +1,24 @@
+# 丽萨终端 - Python 依赖
+# Orange Pi 5 Pro (aarch64, Python 3.11+, Debian/Ubuntu)
+
+# 核心
+aiohttp>=3.9
+pyyaml>=6.0
+
+# 音频
+sounddevice>=0.4.6
+numpy>=1.24
+
+# LED 灯环（WS2812B via SPI）
+# 不需要额外库，用 spidev 直接写
+spidev>=3.5
+
+# 离线 ASR（可选，断网兜底）
+faster-whisper>=1.0.0
+
+# GPIO（Orange Pi 5 Pro）
+OPi.GPIO>=0.6
+
+# 小屏幕（可选）
+# adafruit-circuitpython-ssd1306  # I2C OLED
+# Pillow  # 图片渲染

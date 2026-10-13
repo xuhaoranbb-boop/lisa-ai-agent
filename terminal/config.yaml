@@ -1,0 +1,84 @@
+# ============================================================
+# 丽萨终端配置 - Orange Pi 5 Pro
+# ============================================================
+
+bridge:
+  # PC 端 bridge 服务器地址（丽萨电脑的内网 IP）
+  host: "192.168.1.100"
+  port: 8765
+  # 鉴权 token（和 bridge 配置里的 JARVIS_BRIDGE_TOKEN 一致）
+  token: "change-me-to-your-jarvis-token"
+  # 设备 ID（唯一标识这个终端）
+  device_id: "lisa-opi5-01"
+  # 重连间隔（秒）
+  reconnect_interval: 5
+  # 心跳间隔（秒）
+  heartbeat_interval: 15
+
+audio:
+  # 采样率
+  sample_rate: 16000
+  # 声道数
+  channels: 1
+  # 音频输入设备名（null = 系统默认）
+  # 可以用 `arecord -l` 查看可用设备
+  input_device: null
+  # 音频输出设备名（null = 系统默认）
+  output_device: null
+  # 录音缓冲区大小（帧数）
+  block_size: 1024
+  # VAD 静音阈值（RMS，低于此值视为静音）
+  silence_threshold: 300
+  # 最大录音时长（秒），超时自动停止
+  max_record_seconds: 60
+
+gpio:
+  # 录音按钮 GPIO（BCM 编号）
+  # Orange Pi 5 Pro 物理引脚对应关系见 setup.sh
+  button_pin: 27
+  # 按钮是否低电平触发（大多数按钮接地 = true）
+  button_active_low: true
+  # 按钮去抖时间（毫秒）
+  button_debounce_ms: 50
+
+led:
+  # WS2812B 灯环灯珠数量
+  count: 12
+  # 数据引脚（BCM 编号）
+  data_pin: 18
+  # 亮度 (0-255)
+  brightness: 80
+  # SPI 模式（推荐，比 bit-bang 稳定）
+  use_spi: true
+  spi_device: "/dev/spidev0.0"
+
+local_asr:
+  # 是否启用离线 ASR 兜底
+  enabled: true
+  # 模型大小：tiny / base / small
+  # tiny = 最快，准确率一般
+  # base = 平衡
+  # small = 最准，需要更多内存（8GB 够用）
+  model_size: "small"
+  # 识别语言
+  language: "zh"
+  # VAD 过滤（过滤纯静音片段）
+  vad_filter: true
+  # beam search 大小
+  beam_size: 5
+
+display:
+  # 是否启用 OLED 小屏幕
+  enabled: false
+  # 屏幕类型：ssd1306 (128x64) / ili9341 (320x240)
+  type: "ssd1306"
+  # 总线类型：i2c / spi
+  bus: "i2c"
+  # I2C 地址
+  i2c_address: "0x3C"
+  # I2C 总线号
+  i2c_bus: 7
+
+logging:
+  level: "INFO"
+  file: "/var/log/lisa-terminal.log"
